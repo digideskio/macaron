@@ -1,0 +1,18 @@
+[build]
+
+# The default directories created by `macaron new new-app`
+directories = [
+  "conf", "modules", "modules/middleware", "modules/base",
+  "modules/settings", "models", "templates", "public", "public/javascript",
+  "public/stylesheets", "public/images", "routers", "scripts"
+]
+
+# Option to include a readme file on project init
+[readme]
+enabled = true
+format = "md"
+
+# This will git init the project on create
+[git]
+enabled = true
+
