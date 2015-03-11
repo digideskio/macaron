@@ -1,3 +1,10 @@
 macaron.sublime-project
 macaron.sublime-workspace
+
+# Macaron CLI
 macaron/macaron
+macaron/Godeps
+macaron/bin
+macaron/release
+macaron/pkg
+

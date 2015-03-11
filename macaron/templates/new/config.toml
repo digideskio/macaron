@@ -15,4 +15,3 @@ format = "md"
 # This will git init the project on create
 [git]
 enabled = true
-
