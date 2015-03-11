@@ -37,6 +37,10 @@ updatedeps:
 	@echo $(DEPS) | xargs -n1 go get -d -u
 	@godep update ...
 
+bindata:
+	@$(ECHO) "$(OK_COLOR)==> Embedding Assets$(NO_COLOR)"
+	@go-bindata templates/...
+
 test: deps
 	@$(ECHO) "$(OK_COLOR)==> Testing $(NAME)...$(NO_COLOR)"
 	godep go test ./...
