@@ -32,7 +32,7 @@ func main() {
 		{
 			Name:      "scaffold",
 			ShortName: "s",
-			Usage:     "A scaffold in Macaron is a full set of model, router, views and logic.",
+			Usage:     "A scaffold in Macaron is a full set of model, router, view and logic.",
 			Action:    NewMacaronScaffold,
 		},
 	}
