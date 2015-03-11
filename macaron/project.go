@@ -57,14 +57,17 @@ func (self *Project) Build() {
 	}
 
 	template := Template{
-		Filename: "app.go",
-		Location: main,
-		Template: "./templates/new/files/app.tmpl",
-		Data:     self,
+		Filename:     self.Name + ".go",
+		OutputPath:   main,
+		TemplatePath: "./templates/new/files/app.tmpl",
+		Context:      self,
 	}
 
-	if err := template.Render(); err != nil {
-		log.Fatal(err)
+	// we can do something fancy here like ask to replace the file.
+	if !template.Exist() {
+		if err := template.Write(); err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	if self.Config.Readme.Enabled {

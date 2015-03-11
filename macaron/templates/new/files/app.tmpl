@@ -25,6 +25,11 @@ import (
 	"{{.Name}}/router/default"
 )
 
+const (
+  Name = "{{.Name}}"
+  Version = "0.1.0"
+)
+
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	run()
