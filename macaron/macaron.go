@@ -26,8 +26,14 @@ func main() {
 		{
 			Name:      "new",
 			ShortName: "n",
-			Usage:     "Create a new macaron project.",
+			Usage:     "Create a new empty macaron project.",
 			Action:    NewMacaronProject,
+		},
+		{
+			Name:      "scaffold",
+			ShortName: "s",
+			Usage:     "A scaffold in Macaron is a full set of model, router, views and logic.",
+			Action:    NewMacaronScaffold,
 		},
 	}
 
