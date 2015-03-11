@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
+	"path"
 
 	"github.com/BurntSushi/toml"
 )
@@ -40,4 +43,16 @@ func (self *Project) Init() {
 }
 
 func (self *Project) Build() {
+
+	main := path.Join(self.Location, self.Name)
+
+	if err := os.MkdirAll(main, 0777); err != nil {
+		log.Fatal(err)
+	}
+
+	for _, dir := range self.Config.App.Directories {
+		if err := os.MkdirAll(path.Join(main, dir), 0777); err != nil {
+			log.Fatal(err)
+		}
+	}
 }
