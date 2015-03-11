@@ -1,4 +1,4 @@
-[build]
+[app]
 
 # The default directories created by `macaron new new-app`
 directories = [

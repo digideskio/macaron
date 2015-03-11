@@ -13,12 +13,12 @@ type Project struct {
 }
 
 type ProjectConfig struct {
-	Build  build
+	App    app
 	Readme readme
 	Git    git
 }
 
-type build struct {
+type app struct {
 	Directories []string
 }
 
