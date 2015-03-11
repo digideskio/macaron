@@ -56,6 +56,17 @@ func (self *Project) Build() {
 		}
 	}
 
+	template := Template{
+		Filename: "app.go",
+		Location: main,
+		Template: "./templates/new/files/app.tmpl",
+		Data:     self,
+	}
+
+	if err := template.Render(); err != nil {
+		log.Fatal(err)
+	}
+
 	if self.Config.Readme.Enabled {
 		// ...
 	}
