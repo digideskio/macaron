@@ -55,4 +55,12 @@ func (self *Project) Build() {
 			log.Fatal(err)
 		}
 	}
+
+	if self.Config.Readme.Enabled {
+		// ...
+	}
+
+	if self.Config.Git.Enabled {
+		// ...
+	}
 }
