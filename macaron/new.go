@@ -45,6 +45,8 @@ func runNew(c *cli.Context) {
 		if len(name) == 0 {
 			log.Fatal("App name is missing or invalid(e.g. myapp)")
 		}
+	} else {
+		name = c.Args().Get(0)
 	}
 
 	// Validate path if given(can't be empty, otherwise will not be parsed).
@@ -66,6 +68,8 @@ func runNew(c *cli.Context) {
 		Name:     name,
 		Location: location,
 	}
+
+	log.Debug("Location: %s\n", location)
 
 	app.Init()
 	app.Build()

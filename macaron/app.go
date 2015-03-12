@@ -2,23 +2,13 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"path"
 	"strings"
 
 	"github.com/BurntSushi/toml"
+	"github.com/Unknwon/log"
 )
-
-// conf/app.ini
-// models/models.go
-// modules/base/template.go
-// modules/base/base.go
-// modules/middleware/context.go
-// modules/settings/settings.go
-// routers/routers.go
-// templates/helpers/
-// template/layout.tmpl
 
 var (
 	newDefaultFiles = []string{
@@ -64,13 +54,15 @@ func (app *App) Build() {
 
 	main := path.Join(app.Location, app.Name)
 
+	log.Debug("Main Path: %s", main)
+
 	if err := os.MkdirAll(main, 0777); err != nil {
-		log.Fatal(err)
+		log.Fatal("Error: ", err)
 	}
 
 	for _, dir := range app.Directories {
 		if err := os.MkdirAll(path.Join(main, dir), 0777); err != nil {
-			log.Fatal(err)
+			log.Fatal("Error: ", err)
 		}
 	}
 
@@ -83,7 +75,7 @@ func (app *App) Build() {
 	// we can do something fancy here like ask to replace the file.
 	if !template.Exist() {
 		if err := template.Write(); err != nil {
-			log.Fatal(err)
+			log.Fatal("Error: ", err)
 		}
 	}
 
@@ -97,7 +89,7 @@ func (app *App) Build() {
 		// we can do something fancy here like ask to replace the file.
 		if !template.Exist() {
 			if err := template.Write(); err != nil {
-				log.Fatal(err)
+				log.Fatal("Error: ", err)
 			}
 		}
 	}
