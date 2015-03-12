@@ -5,8 +5,34 @@ import (
 	"log"
 	"os"
 	"path"
+	"strings"
 
 	"github.com/BurntSushi/toml"
+)
+
+// conf/app.ini
+// models/models.go
+// modules/base/template.go
+// modules/base/base.go
+// modules/middleware/context.go
+// modules/settings/settings.go
+// routers/routers.go
+// templates/helpers/
+// template/layout.tmpl
+
+var (
+	newDefaultFiles = []string{
+		"conf/app.ini",
+		"models/models.go",
+		"modules/base/template.go",
+		"modules/base/base.go",
+		"modules/middleware/context.go",
+		"modules/settings/settings.go",
+		"routers/routers.go",
+		"templates/layout.tmpl",
+		"public/css/base.css",
+		"public/js/base.js",
+	}
 )
 
 type readme struct {
@@ -49,8 +75,7 @@ func (app *App) Build() {
 	}
 
 	template := Template{
-		Filename:     app.Name + ".go",
-		OutputPath:   main,
+		OutputPath:   path.Join(main, app.Name+".go"),
 		TemplatePath: "./templates/new/files/app.tmpl",
 		Context:      app,
 	}
@@ -59,6 +84,21 @@ func (app *App) Build() {
 	if !template.Exist() {
 		if err := template.Write(); err != nil {
 			log.Fatal(err)
+		}
+	}
+
+	for _, file := range newDefaultFiles {
+		template := Template{
+			OutputPath:   path.Join(main, file),
+			TemplatePath: path.Join("./templates/new/files/", strings.Replace(file, "/", "_", -1)) + ".tmpl",
+			Context:      app,
+		}
+
+		// we can do something fancy here like ask to replace the file.
+		if !template.Exist() {
+			if err := template.Write(); err != nil {
+				log.Fatal(err)
+			}
 		}
 	}
 

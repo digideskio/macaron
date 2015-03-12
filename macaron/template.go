@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"io/ioutil"
-	"path"
 	"text/template"
 
 	"github.com/Unknwon/com"
@@ -17,7 +16,7 @@ type Template struct {
 }
 
 func (self *Template) Exist() bool {
-	return com.IsExist(self.Path())
+	return com.IsExist(self.OutputPath)
 }
 
 func (self *Template) Write() error {
@@ -28,7 +27,7 @@ func (self *Template) Write() error {
 		return err
 	}
 
-	if err := com.WriteFile(self.Path(), output.Bytes()); err != nil {
+	if err := com.WriteFile(self.OutputPath, output.Bytes()); err != nil {
 		return err
 	}
 
@@ -44,7 +43,7 @@ func (self *Template) Render() (bytes.Buffer, error) {
 		return output, err
 	}
 
-	tmpl, err := template.New(self.Filename).Parse(string(template_data))
+	tmpl, err := template.New(self.OutputPath).Parse(string(template_data))
 
 	if err != nil {
 		return output, err
@@ -55,8 +54,4 @@ func (self *Template) Render() (bytes.Buffer, error) {
 	}
 
 	return output, err
-}
-
-func (self *Template) Path() string {
-	return path.Join(self.OutputPath, self.Filename)
 }
