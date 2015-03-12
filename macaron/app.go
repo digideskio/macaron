@@ -9,22 +9,6 @@ import (
 	"github.com/BurntSushi/toml"
 )
 
-type Project struct {
-	Name     string
-	Location string
-	Config   ProjectConfig
-}
-
-type ProjectConfig struct {
-	App    app
-	Readme readme
-	Git    git
-}
-
-type app struct {
-	Directories []string
-}
-
 type readme struct {
 	Enabled bool
 	Format  string
@@ -34,33 +18,41 @@ type git struct {
 	Enabled bool
 }
 
-func (self *Project) Init() {
-	if _, err := toml.DecodeFile("templates/new/config.toml", &self.Config); err != nil {
+type App struct {
+	Name        string `toml:"-"`
+	Location    string `toml:"-"`
+	Directories []string
+	Readme      readme
+	Git         git
+}
+
+func (app *App) Init() {
+	if _, err := toml.DecodeFile("templates/new/config.toml", &app); err != nil {
 		// handle error
 	}
 
-	fmt.Println(self.Config)
+	fmt.Println(app)
 }
 
-func (self *Project) Build() {
+func (app *App) Build() {
 
-	main := path.Join(self.Location, self.Name)
+	main := path.Join(app.Location, app.Name)
 
 	if err := os.MkdirAll(main, 0777); err != nil {
 		log.Fatal(err)
 	}
 
-	for _, dir := range self.Config.App.Directories {
+	for _, dir := range app.Directories {
 		if err := os.MkdirAll(path.Join(main, dir), 0777); err != nil {
 			log.Fatal(err)
 		}
 	}
 
 	template := Template{
-		Filename:     self.Name + ".go",
+		Filename:     app.Name + ".go",
 		OutputPath:   main,
 		TemplatePath: "./templates/new/files/app.tmpl",
-		Context:      self,
+		Context:      app,
 	}
 
 	// we can do something fancy here like ask to replace the file.
@@ -70,11 +62,11 @@ func (self *Project) Build() {
 		}
 	}
 
-	if self.Config.Readme.Enabled {
+	if app.Readme.Enabled {
 		// ...
 	}
 
-	if self.Config.Git.Enabled {
+	if app.Git.Enabled {
 		// ...
 	}
 }
