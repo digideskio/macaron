@@ -5,8 +5,34 @@ import (
 	"log"
 	"os"
 	"path"
+	"strings"
 
 	"github.com/BurntSushi/toml"
+)
+
+// conf/app.ini
+// models/models.go
+// modules/base/template.go
+// modules/base/base.go
+// modules/middleware/context.go
+// modules/settings/settings.go
+// routers/routers.go
+// templates/helpers/
+// template/layout.tmpl
+
+var (
+	NewDefaultFiles = []string{
+		"conf/app.ini",
+		"models/models.go",
+		"modules/base/template.go",
+		"modules/base/base.go",
+		"modules/middleware/context.go",
+		"modules/settings/settings.go",
+		"routers/routers.go",
+		"templates/layout.tmpl",
+		"public/css/base.css",
+		"public/js/base.js",
+	}
 )
 
 type Project struct {
@@ -57,9 +83,8 @@ func (self *Project) Build() {
 	}
 
 	template := Template{
-		Filename:     self.Name + ".go",
-		OutputPath:   main,
-		TemplatePath: "./templates/new/files/app.tmpl",
+		OutputPath:   path.Join(main, self.Name+".go"),
+		TemplatePath: "./templates/new/files/main.tmpl",
 		Context:      self,
 	}
 
@@ -67,6 +92,21 @@ func (self *Project) Build() {
 	if !template.Exist() {
 		if err := template.Write(); err != nil {
 			log.Fatal(err)
+		}
+	}
+
+	for _, file := range NewDefaultFiles {
+		template := Template{
+			OutputPath:   path.Join(main, file),
+			TemplatePath: path.Join("./templates/new/files/", strings.Replace(file, "/", "_", -1)) + ".tmpl",
+			Context:      self,
+		}
+
+		// we can do something fancy here like ask to replace the file.
+		if !template.Exist() {
+			if err := template.Write(); err != nil {
+				log.Fatal(err)
+			}
 		}
 	}
 
