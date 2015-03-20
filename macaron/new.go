@@ -59,20 +59,15 @@ func runNew(c *cli.Context) {
 
 	if !com.IsDir(location) {
 		log.Fatal("Given path does not exist or is not a directory: %s", location)
-	} else if err := PathInsideGOPATH(location); err != nil {
+	} else if err := pathInsideGOPATH(location); err != nil {
 		log.Fatal("Invalid path: %v", err)
 	}
 
-	// Making new app.
+	// Making a new app.
 	app := &App{
 		Name:     name,
 		Location: location,
 	}
-
-	log.Debug("Location: %s\n", location)
-
-	app.Init()
-	app.Build()
-
-	fmt.Println("DONE")
+	app.init(MustAsset("templates/new/config.toml"))
+	app.build()
 }

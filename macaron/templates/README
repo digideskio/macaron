@@ -1,0 +1,3 @@
+Execute following command in directory when anything is changed:
+
+$ go-bindata -o=bindata.go -ignore="\\.DS_Store|README" templates/...

@@ -21,8 +21,8 @@ import (
 	"github.com/Unknwon/com"
 )
 
-// PathInsideGOPATH checks if given path is in the one of GOPATHs.
-func PathInsideGOPATH(location string) error {
+// pathInsideGOPATH checks if given path is in the one of GOPATHs.
+func pathInsideGOPATH(location string) error {
 	insideGoPath := false
 	gopaths := com.GetGOPATHs()
 	for _, wg := range gopaths {

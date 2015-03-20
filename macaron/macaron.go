@@ -31,19 +31,17 @@ var (
 )
 
 func init() {
-	log.Prefix = "[Macaron]"
+	log.Prefix = "[MG]"
 	log.TimeFormat = "15:04:05"
 }
 
 func main() {
 	app := cli.NewApp()
-
 	app.Name = "macaron"
 	app.Version = APP_VER
 	app.Usage = "a command line scaffold generator for Macaron web app."
 	app.Author = "macaron - https://github.com/Unknwon/macaron"
 	app.Email = ""
-
 	app.Commands = []cli.Command{
 		cmdNew,
 		{

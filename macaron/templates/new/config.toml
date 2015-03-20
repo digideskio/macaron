@@ -1,11 +1,15 @@
-[app]
-
-# The default directories created by `macaron new new-app`
+# The default directories
 directories = [
-  "conf", "modules", "modules/middleware", "modules/base",
-  "modules/settings", "models", "templates", "templates/helpers", 
-  "public", "public/js", "public/css", 
-  "public/images", "routers", "scripts"
+  "conf", 
+  "models", 
+  "modules/middleware", 
+  "modules/base",
+  "modules/settings", 
+  "templates", 
+  "public/js", 
+  "public/css", 
+  "public/imgs", 
+  "routers"
 ]
 
 # Option to include a readme file on project init
