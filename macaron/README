@@ -1,0 +1,5 @@
+THIS IS A TEMPORARY FILE AND WILL BE DELETED EVENTUALLY
+
+* macaron new NAME [PATH] [OPTIONS...]
+
+PATH is optional and default to working directory. If given, can be relative to GOAPTH/src or an absolute path.
