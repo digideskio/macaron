@@ -1,0 +1,12 @@
+package routers
+
+import (
+	"{{.Name}}/modules/middleware"
+)
+
+func Home(ctx *middleware.Context) {
+	ctx.JSON(200, map[string]string{
+		"title": "Welcome to use Macaron!",
+	})
+	// ctx.HTML(200, "home")
+}

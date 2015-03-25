@@ -57,3 +57,18 @@ func (t *Template) write() error {
 
 	return ioutil.WriteFile(t.OutputPath, output.Bytes(), os.ModePerm)
 }
+
+// generateFile generates new file from given template data and context to path.
+func generateFile(path string, data []byte, context interface{}) error {
+	t := Template{
+		OutputPath: path,
+		Data:       data,
+		Context:    context,
+	}
+
+	// we can do something fancy here like ask to replace the file.
+	if t.exist() {
+		return nil
+	}
+	return t.write()
+}

@@ -27,16 +27,16 @@ import (
 
 var (
 	newDefaultFiles = []string{
-		"conf/app.ini",
-		"models/models.go",
-		"modules/base/template.go",
-		"modules/base/base.go",
-		"modules/middleware/context.go",
-		"modules/settings/settings.go",
-		"routers/routers.go",
-		"templates/layout.tmpl",
-		"public/css/base.css",
-		"public/js/base.js",
+		// "conf/app.ini",
+		// "models/models.go",
+		// "modules/base/template.go",
+		// "modules/base/base.go",
+		"modules/middleware/context",
+		// "modules/settings/settings.go",
+		"routers/home",
+		// "templates/layout.tmpl",
+		// "public/css/base.css",
+		// "public/js/base.js",
 	}
 )
 
@@ -90,34 +90,18 @@ func (app *App) build() {
 		}
 	}
 
-	t := Template{
-		OutputPath: path.Join(appPath, app.Name+".go"),
-		Data:       MustAsset("templates/new/files/app.tmpl"),
-		Context:    app,
+	if err := generateFile(path.Join(appPath, app.Name)+".go",
+		MustAsset("templates/new/files/app.tmpl"), app); err != nil {
+		log.Fatal("Fail to generate file '%s': %v", app.Name+".go", err)
 	}
 
-	// we can do something fancy here like ask to replace the file.
-	if !t.exist() {
-		if err := t.write(); err != nil {
-			log.Fatal("Fail to generate file '%s': %v", t.OutputPath, err)
+	for _, file := range newDefaultFiles {
+		if err := generateFile(path.Join(appPath, file)+".go",
+			MustAsset(path.Join("templates/new/files", strings.Replace(file, "/", "_", -1)+".tmpl")),
+			app); err != nil {
+			log.Fatal("Fail to generate file '%s': %v", file+".go", err)
 		}
 	}
-	return
-
-	// for _, file := range newDefaultFiles {
-	// 	template := Template{
-	// 		OutputPath:   path.Join(main, file),
-	// 		TemplatePath: path.Join("./templates/new/files/", strings.Replace(file, "/", "_", -1)) + ".tmpl",
-	// 		Context:      app,
-	// 	}
-
-	// 	// we can do something fancy here like ask to replace the file.
-	// 	if !template.Exist() {
-	// 		if err := template.Write(); err != nil {
-	// 			log.Fatal("Error: ", err)
-	// 		}
-	// 	}
-	// }
 
 	// if app.Readme.Enabled {
 	// 	// ...
